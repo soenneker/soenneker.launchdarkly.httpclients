@@ -6,7 +6,7 @@ using System.Threading;
 namespace Soenneker.LaunchDarkly.HttpClients.Abstract;
 
 /// <summary>
-/// A .NET thread-safe singleton HttpClient for 
+/// Provides a cached HTTP client authenticated for LaunchDarkly's API.
 /// </summary>
 public interface ILaunchDarklyOpenApiHttpClient: IDisposable, IAsyncDisposable
 {

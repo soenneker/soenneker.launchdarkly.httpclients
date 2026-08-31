@@ -6,7 +6,7 @@ using Soenneker.Utils.HttpClientCache.Registrar;
 namespace Soenneker.LaunchDarkly.HttpClients.Registrars;
 
 /// <summary>
-/// Registers the OpenAPI HttpClient wrapper for dependency injection.
+/// Registers the cached LaunchDarkly HTTP client provider.
 /// </summary>
 public static class LaunchDarklyOpenApiHttpClientRegistrar
 {

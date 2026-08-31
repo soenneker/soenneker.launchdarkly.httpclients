@@ -11,11 +11,11 @@ using Soenneker.Utils.HttpClientCache.Abstract;
 
 namespace Soenneker.LaunchDarkly.HttpClients;
 
-///<inheritdoc cref="ILaunchDarklyOpenApiHttpClient"/>
 public sealed class LaunchDarklyOpenApiHttpClient : ILaunchDarklyOpenApiHttpClient
 {
     private readonly IHttpClientCache _httpClientCache;
     private readonly IConfiguration _config;
+    private readonly string _clientId = $"{nameof(LaunchDarklyOpenApiHttpClient)}:{Guid.NewGuid():N}";
 
     private const string _prodBaseUrl = "https://app.launchdarkly.com/api/v2";
 
@@ -27,7 +27,7 @@ public sealed class LaunchDarklyOpenApiHttpClient : ILaunchDarklyOpenApiHttpClie
 
     public ValueTask<HttpClient> Get(CancellationToken cancellationToken = default)
     {
-        return _httpClientCache.Get(nameof(LaunchDarklyOpenApiHttpClient), (config: _config, baseUrl: _config["LaunchDarkly:ClientBaseUrl"] ?? _prodBaseUrl), static state =>
+        return _httpClientCache.Get(_clientId, (config: _config, baseUrl: _config["LaunchDarkly:ClientBaseUrl"] ?? _prodBaseUrl), static state =>
         {
             var apiKey = state.config.GetValueStrict<string>("LaunchDarkly:ApiKey");
             string authHeaderName = state.config["LaunchDarkly:AuthHeaderName"] ?? "Authorization";
@@ -47,11 +47,11 @@ public sealed class LaunchDarklyOpenApiHttpClient : ILaunchDarklyOpenApiHttpClie
 
     public void Dispose()
     {
-        _httpClientCache.RemoveSync(nameof(LaunchDarklyOpenApiHttpClient));
+        _httpClientCache.RemoveSync(_clientId);
     }
 
     public ValueTask DisposeAsync()
     {
-        return _httpClientCache.Remove(nameof(LaunchDarklyOpenApiHttpClient));
+        return _httpClientCache.Remove(_clientId);
     }
 }
