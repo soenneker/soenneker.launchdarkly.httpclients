@@ -11,6 +11,7 @@ using Soenneker.Utils.HttpClientCache.Abstract;
 
 namespace Soenneker.LaunchDarkly.HttpClients;
 
+/// <inheritdoc cref="ILaunchDarklyOpenApiHttpClient" />
 public sealed class LaunchDarklyOpenApiHttpClient : ILaunchDarklyOpenApiHttpClient
 {
     private readonly IHttpClientCache _httpClientCache;
