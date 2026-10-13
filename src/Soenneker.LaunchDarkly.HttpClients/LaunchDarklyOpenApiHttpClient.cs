@@ -30,7 +30,7 @@ public sealed class LaunchDarklyOpenApiHttpClient : ILaunchDarklyOpenApiHttpClie
     {
         return _httpClientCache.Get(_clientId, (config: _config, baseUrl: _config["LaunchDarkly:ClientBaseUrl"] ?? _prodBaseUrl), static state =>
         {
-            var apiKey = state.config.GetValueStrict<string>("LaunchDarkly:ApiKey");
+            var apiKey = state.config.GetStringStrict("LaunchDarkly:ApiKey");
             string authHeaderName = state.config["LaunchDarkly:AuthHeaderName"] ?? "Authorization";
             string authHeaderValueTemplate = state.config["LaunchDarkly:AuthHeaderValueTemplate"] ?? "{token}";
             string authHeaderValue = authHeaderValueTemplate.Replace("{token}", apiKey, StringComparison.Ordinal);
